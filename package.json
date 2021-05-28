@@ -1,0 +1,18 @@
+{
+  "name": "frp-letsencrypt",
+  "license": "MIT",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "forever": "^3.0.4",
+    "nodemon": "^2.0.7",
+    "pino": "^6.11.3",
+    "recursive-object-assign": "^1.0.1",
+    "redbird": "^0.10.0"
+  },
+  "scripts": {
+    "server": "forever --spinSleepTime 1300 -c \"nodemon --ext js --ignore 'node_modules/**'--watch src --exitcrash\" src/index.js"
+  }
+}
