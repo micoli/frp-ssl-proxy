@@ -1,0 +1,6 @@
+.git
+.gitignore
+data
+docs
+example
+node_modules
