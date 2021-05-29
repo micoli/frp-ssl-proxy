@@ -1,0 +1,42 @@
+%%{init: {'theme':'default'}}%%
+graph TD
+  WU1([fa:fa-female WebUser 1])
+  WU2([fa:fa-male WebUser 2])
+  WU3([fa:fa-child WebUser 3])
+
+  LE[[fa:fa-key letsencrypt.com]]
+  FRPLE[[fa:fa-server frp-ssl-proxy<br><br>https://www-usera.tunnel.com<br>https://www-userc.tunnel.com<br>https://www-userc.tunnel.com]]
+  FRPS[fa:fa-archway FRP server]
+
+  FRPC1[fa:fa-archway FRP client]
+  HTTP1[[fa:fa-server HTTP server<br><br>www-usera.example.local]]
+
+  FRPC2[fa:fa-archway FRP client]
+  HTTP2[[fa:fa-server HTTP server<br><br>www-userb.example.local]]
+
+  FRPC3[fa:fa-archway FRP client]
+  HTTP3[[fa:fa-server HTTP server<br><br>www-userc.example.local]]
+
+  WU1 -.-> |https:443|FRPLE
+  WU2  -.-> |https:443|FRPLE
+  WU3  -.-> |https:443|FRPLE
+  subgraph Proxy 'tunnel.com'
+    FRPLE  -.-> |http:80|FRPS
+  end
+  LE -.-> |certicate|FRPLE
+  FRPLE  -.-> |certicate request|LE
+
+  subgraph CC [userc]
+    FRPS --> |7000|FRPC3
+    FRPC3  -.-> |http:80|HTTP3
+  end
+
+  subgraph CB [userb]
+    FRPS --> |7000|FRPC2
+    FRPC2  -.-> |http:80|HTTP2
+  end
+
+  subgraph CA [usera]
+    FRPS --> |7000|FRPC1
+    FRPC1  -.-> |http:80|HTTP1
+  end
